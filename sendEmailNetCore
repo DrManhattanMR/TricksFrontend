@@ -28,3 +28,5 @@ public bool SendEmail(string to, string subject, string body)
         return false; // se produjo un error al enviar el correo electrónico
     }
 }
+/// the next line in object.propierty = sql-lector-row prevent the error "possible null reference"
+lector["string"] != DBNull.Value ? lector["string"]?.ToString() : string.Empty;

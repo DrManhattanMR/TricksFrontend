@@ -1,0 +1,30 @@
+using System;
+using System.Net;
+using System.Net.Mail;
+
+public bool SendEmail(string to, string subject, string body)
+{
+    string fromEmail = "tucorreoelectronico@gmail.com"; // dirección de correo electrónico desde la que se enviará el correo electrónico
+    string fromPassword = "tucontraseña"; // contraseña de la cuenta de correo electrónico
+    string smtpHost = "smtp.gmail.com"; // servidor SMTP para enviar el correo electrónico
+    int smtpPort = 587; // puerto SMTP para enviar el correo electrónico
+
+    try
+    {
+        SmtpClient smtpClient = new SmtpClient(smtpHost, smtpPort);
+        smtpClient.UseDefaultCredentials = false;
+        smtpClient.Credentials = new NetworkCredential(fromEmail, fromPassword);
+        smtpClient.EnableSsl = true;
+
+        MailMessage mailMessage = new MailMessage(fromEmail, to, subject, body);
+        mailMessage.IsBodyHtml = true;
+
+        smtpClient.Send(mailMessage);
+        return true; // el correo electrónico se envió correctamente
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error al enviar el correo electrónico: " + ex.Message);
+        return false; // se produjo un error al enviar el correo electrónico
+    }
+}
